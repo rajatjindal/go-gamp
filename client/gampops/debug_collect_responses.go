@@ -45,7 +45,13 @@ func NewDebugCollectOK() *DebugCollectOK {
 Debug Report
 */
 type DebugCollectOK struct {
-	Payload []*models.HitParsingResult
+	Payload Payload
+}
+
+//Payload is payload received in DebugCollectOK
+type Payload struct {
+	HitParsingResult []*models.HitParsingResult `json:"hitParsingResult"`
+	ParserMsg        []*models.ParserMessage    `json:"parserMessage"`
 }
 
 func (o *DebugCollectOK) Error() string {

@@ -2,6 +2,7 @@ package gamp
 
 import (
 	"context"
+	"encoding/json"
 	"io"
 	"io/ioutil"
 
@@ -54,6 +55,12 @@ func New(ctx context.Context, tid string) *gampops.Client {
 	transport.Context = ctx
 	transport.Consumers["image/gif"] = runtime.ConsumerFunc(func(reader io.Reader, data interface{}) error {
 		_, err := ioutil.ReadAll(reader)
+		return err
+	})
+
+	transport.Consumers["application/javascript"] = runtime.ConsumerFunc(func(reader io.Reader, data interface{}) error {
+		d, err := ioutil.ReadAll(reader)
+		err = json.Unmarshal(d, &data)
 		return err
 	})
 
